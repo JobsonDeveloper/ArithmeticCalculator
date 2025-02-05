@@ -1,47 +1,136 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+  import { reactive } from 'vue';
+
+  const state = reactive({
+    operation: "+",
+    valueOne: 0,
+    valueTow: 0,
+    result: 0
+  }); 
+
+  const changeOperator = (ev: Event) => {
+    if (ev && ev.target) {
+      state.operation = (<HTMLSelectElement>ev.target).value;
+    }
+  }
+
+  const changeNumberOne = (ev: Event) => {
+    if (ev && ev.target) {
+      state.valueOne = parseFloat((<HTMLInputElement>ev.target).value);
+    }
+  }
+
+  const changeNumberTow = (ev: Event) => {
+    if (ev && ev.target) {
+      state.valueTow = parseFloat((<HTMLInputElement>ev.target).value);
+    }
+  }
+
+  const operations = () => {
+    let { operation, valueOne, valueTow } = state;
+    
+    if ((valueOne != 0) && (valueTow != 0)) {
+      switch (operation) {
+        case "+":
+          state.result = valueOne + valueTow;
+          break;
+        case "-":
+          state.result = valueOne - valueTow;
+          break;
+        case "*":
+          state.result = valueOne * valueTow;
+          break;
+        case "/":
+          state.result = valueOne / valueTow;
+          break;
+        default:
+          return;
+      }
+    }
+  }
+  
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <main class="container d-flex flex-column align-items-center">
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+    <form class="form p-4 rounded-2 mt-5" @change="operations">
+      <h1 class="mb-5 text-center">Calculadora</h1>
 
-  <main>
-    <TheWelcome />
+      <ul class="d-flex row list-unstyled row-gap-5 align-items-center justify-content-between">
+        <li class="col-12 text-center form__result rounded-2">
+          {{ state.result.toFixed(2) }}
+        </li>
+
+        <li class="col-12 p-0">
+          <input type="number" name="" id="" class="form-control form__input" @change="changeNumberOne"
+            placeholder="Primeiro número">
+        </li>
+
+        <li class="col-12 p-0">
+          <input type="number" name="" id="" class="form-control form__input" @change="changeNumberTow"
+            placeholder="Segundo número">
+        </li>
+
+        <li class="col-12 p-0">
+          <select class="form-select" @change="changeOperator">
+            <option selected value="+">Soma</option>
+            <option value="-">Subtração</option>
+            <option value="*">Multiplicação</option>
+            <option value="/">Divisão</option>
+          </select>
+        </li>
+
+        
+      </ul>
+    </form>
   </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+* {
+  font-family: Roboto, sans-serif;
 }
+  form {
+    border: 1px solid #e9e9e9;
+    background-color: #10db97;
+    width: 300px;
+  }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+  h1 {
+    color: #fff;
+    text-transform: uppercase;
+  }
 
-@media (min-width: 1024px) {
-  header {
+  .form__result {
     display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+    align-items: center;
+    justify-content: center;
+    min-height: 100px;
+    background-color: #dcfcce;
+    font-size: 2rem;
+    overflow: auto;
+    font-family: Orbitron, sans-serif;
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
+  .form__span {
+    padding: 0;
+    font-size: 1.2rem;
   }
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+  .form__input {
+    height: 50px;
+    background-color: rgb(0, 179, 104);
+    color: #fff;
+    font-family: Silkscreen;
   }
-}
+
+  .form__input::placeholder {
+    color: #fff;
+  }
+
+  select {
+    background-color:  rgb(0, 179, 104);
+    color: #fff;
+  }
 </style>
