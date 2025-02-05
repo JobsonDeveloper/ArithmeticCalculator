@@ -1,54 +1,60 @@
 <script setup lang="ts">
-  import { reactive } from 'vue';
+import { reactive } from 'vue';
 
-  const state = reactive({
-    operation: "+",
-    valueOne: 0,
-    valueTow: 0,
-    result: 0
-  }); 
+const state = reactive({
+  operation: "+",
+  valueOne: 0,
+  valueTow: 0,
+  result: 0
+});
 
-  const changeOperator = (ev: Event) => {
-    if (ev && ev.target) {
-      state.operation = (<HTMLSelectElement>ev.target).value;
+const changeOperator = (ev: Event) => {
+  if (ev && ev.target) {
+    state.operation = (<HTMLSelectElement>ev.target).value;
+  }
+}
+
+const changeNumberOne = (ev: Event) => {
+  if (ev && ev.target) {
+    state.valueOne = parseFloat((<HTMLInputElement>ev.target).value);
+  }
+}
+
+const changeNumberTow = (ev: Event) => {
+  if (ev && ev.target) {
+    state.valueTow = parseFloat((<HTMLInputElement>ev.target).value);
+  }
+}
+
+const operations = () => {
+  let { operation, valueOne, valueTow } = state;
+
+  if ((valueOne != 0) && (valueTow != 0)) {
+    switch (operation) {
+      case "+":
+        state.result = valueOne + valueTow;
+        break;
+      case "-":
+        state.result = valueOne - valueTow;
+        break;
+      case "*":
+        state.result = valueOne * valueTow;
+        break;
+      case "/":
+        state.result = valueOne / valueTow;
+        break;
+      case "**":
+        state.result = Math.pow(valueOne, valueTow);
+        break;
+      case "%":
+        state.result = valueOne % valueTow;
+        break;
+      default:
+        return;
     }
   }
+}
 
-  const changeNumberOne = (ev: Event) => {
-    if (ev && ev.target) {
-      state.valueOne = parseFloat((<HTMLInputElement>ev.target).value);
-    }
-  }
-
-  const changeNumberTow = (ev: Event) => {
-    if (ev && ev.target) {
-      state.valueTow = parseFloat((<HTMLInputElement>ev.target).value);
-    }
-  }
-
-  const operations = () => {
-    let { operation, valueOne, valueTow } = state;
-    
-    if ((valueOne != 0) && (valueTow != 0)) {
-      switch (operation) {
-        case "+":
-          state.result = valueOne + valueTow;
-          break;
-        case "-":
-          state.result = valueOne - valueTow;
-          break;
-        case "*":
-          state.result = valueOne * valueTow;
-          break;
-        case "/":
-          state.result = valueOne / valueTow;
-          break;
-        default:
-          return;
-      }
-    }
-  }
-  
 </script>
 
 <template>
@@ -78,10 +84,12 @@
             <option value="-">Subtração</option>
             <option value="*">Multiplicação</option>
             <option value="/">Divisão</option>
+            <option value="**">Potenciação</option>
+            <option value="%">Resto da divisão</option>
           </select>
         </li>
 
-        
+
       </ul>
     </form>
   </main>
@@ -91,46 +99,47 @@
 * {
   font-family: Roboto, sans-serif;
 }
-  form {
-    border: 1px solid #e9e9e9;
-    background-color: #10db97;
-    width: 300px;
-  }
 
-  h1 {
-    color: #fff;
-    text-transform: uppercase;
-  }
+form {
+  border: 1px solid #e9e9e9;
+  background-color: #10db97;
+  width: 300px;
+}
 
-  .form__result {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100px;
-    background-color: #dcfcce;
-    font-size: 2rem;
-    overflow: auto;
-    font-family: Orbitron, sans-serif;
-  }
+h1 {
+  color: #fff;
+  text-transform: uppercase;
+}
 
-  .form__span {
-    padding: 0;
-    font-size: 1.2rem;
-  }
+.form__result {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  background-color: #dcfcce;
+  font-size: 2rem;
+  overflow: auto;
+  font-family: Orbitron, sans-serif;
+}
 
-  .form__input {
-    height: 50px;
-    background-color: rgb(0, 179, 104);
-    color: #fff;
-    font-family: Silkscreen;
-  }
+.form__span {
+  padding: 0;
+  font-size: 1.2rem;
+}
 
-  .form__input::placeholder {
-    color: #fff;
-  }
+.form__input {
+  height: 50px;
+  background-color: rgb(0, 179, 104);
+  color: #fff;
+  font-family: Silkscreen;
+}
 
-  select {
-    background-color:  rgb(0, 179, 104);
-    color: #fff;
-  }
+.form__input::placeholder {
+  color: #fff;
+}
+
+select {
+  background-color: rgb(0, 179, 104);
+  color: #fff;
+}
 </style>
