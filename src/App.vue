@@ -109,6 +109,7 @@ form {
 h1 {
   color: #fff;
   text-transform: uppercase;
+  font-size: 2rem;
 }
 
 .form__result {
