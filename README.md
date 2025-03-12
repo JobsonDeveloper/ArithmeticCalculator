@@ -1,4 +1,3 @@
-### Lista de tarefas
 [Veja o site](https://arithmetic-calculator-one.vercel.app/)
 
 ### Ferramentas utiliizadas:
